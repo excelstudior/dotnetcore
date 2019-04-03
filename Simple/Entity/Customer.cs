@@ -17,6 +17,10 @@ namespace Simple.Entity
         
         public Guid Id { get; set; }
         public string Name { get; set; }
+        //map to invoice
+        public List<Invoice> Invoices { get; set; }
+
         //Add hirechy later
+
     }
 }

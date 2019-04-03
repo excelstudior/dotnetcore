@@ -11,19 +11,6 @@ namespace Simple.Entity.Base
     {
 
         protected BaseDbContext _context;
-        //protected IDbContextFactory dbContextFactory;
-        //protected IServiceProvider _serviceProvider;
-        //public BaseDbContext Context
-        //{
-        //    get
-        //    {
-        //        if (_context == null)
-        //        {
-        //            return new BaseDbContext();
-        //        }
-        //        return _context;
-        //    }
-        //}
 
         public BaseRepository()
         {

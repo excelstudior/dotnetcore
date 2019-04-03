@@ -30,7 +30,8 @@ namespace Simple
         {
             services.AddMvc()//// Modify output format
                     .AddMvcOptions(o => o.OutputFormatters.Add(
-                        new XmlDataContractSerializerOutputFormatter()));
+                        new XmlDataContractSerializerOutputFormatter()))
+                    .AddJsonOptions(o=>o.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //// Format Json output mapped to class property
             //.AddJsonOptions(o=> {
             //    if (o.SerializerSettings.ContractResolver!=null)
@@ -41,7 +42,7 @@ namespace Simple
             //});
             //services.AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration["ConnectionStrings:MsSqlConnection"]));
             //services.AddDbContext<BaseDbContext>(o => o.UseMySQL(Configuration["ConnectionStrings:MsSqlConnection"]));
-            services.AddSingleton<DbContextFatory>();
+            services.AddScoped<DbContextFatory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
