@@ -19,12 +19,11 @@ namespace Simple.Entity.Base
         {
 
         }
-        public static IConfiguration Configuration { get; private set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connection = Configuration["ConnectionStrings:MsSqlConnection"];
-            //optionsBuilder.UseMySQL(Configuration["ConnectionStrings:MsSqlConnection"]);
-            optionsBuilder.UseMySQL("server=localhost;database=Simple;Trusted_Connection=True");
+            //optionsBuilder.UseMySQL(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
+            optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
 
         }
 

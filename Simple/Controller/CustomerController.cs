@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Simple.Entity;
+using Simple.Entity.Base;
 using Simple.Interface;
 using Simple.Repository;
 
@@ -14,7 +17,6 @@ namespace Simple.Controller
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerRepository _customerRepository;
-
         public CustomerController()
         {
             _customerRepository = new CustomerRepository();
@@ -23,7 +25,7 @@ namespace Simple.Controller
         [HttpGet()]
         public IActionResult GetCustomers()
         {
-            var customers = _customerRepository.GetAll();
+            IQueryable<Customer> customers = _customerRepository.GetAll();
             return Ok(customers);
         }
 

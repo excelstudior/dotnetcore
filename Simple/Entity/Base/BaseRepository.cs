@@ -11,19 +11,23 @@ namespace Simple.Entity.Base
     {
 
         protected BaseDbContext _context;
+        //protected IDbContextFactory dbContextFactory;
         //protected IServiceProvider _serviceProvider;
-        
-        public BaseDbContext Context
+        //public BaseDbContext Context
+        //{
+        //    get
+        //    {
+        //        if (_context == null)
+        //        {
+        //            return new BaseDbContext();
+        //        }
+        //        return _context;
+        //    }
+        //}
+
+        public BaseRepository()
         {
-            get
-            {
-                if (_context == null)
-                {
-                   
-                return new BaseDbContext();
-                }
-                return _context;
-            }
+            _context = DbContextFatory.Create();
         }
 
        //protected static ServiceProvider ServiceProvider { get => serviceProvider; set => serviceProvider = value; }
@@ -31,35 +35,35 @@ namespace Simple.Entity.Base
         public virtual IQueryable<T> GetAll()
         {
 
-            IQueryable<T> query = Context.Set<T>();
+            IQueryable<T> query = _context.Set<T>();
             return query;
         }
 
         public virtual IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
 
-            IQueryable<T> query = Context.Set<T>().Where(predicate);
+            IQueryable<T> query = _context.Set<T>().Where(predicate);
             return query;
         }
 
         public virtual void Add(T entity)
         {
-            Context.Set<T>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public virtual void Delete(T entity)
         {
-            Context.Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity);
         }
 
         //public virtual void Edit(T entity)
         //{
-        //    _dbContext.Entry(entity).State = System.Data.EntityState.Modified;
+        //    _context.Entry(entity).State = System.Data.EntityState.Modified;
         //}
 
         public virtual void Save()
         {
-            Context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

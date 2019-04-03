@@ -41,7 +41,7 @@ namespace Simple
             //});
             //services.AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration["ConnectionStrings:MsSqlConnection"]));
             //services.AddDbContext<BaseDbContext>(o => o.UseMySQL(Configuration["ConnectionStrings:MsSqlConnection"]));
-            //services.AddSingleton(IBaseRepository)
+            services.AddSingleton<DbContextFatory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
