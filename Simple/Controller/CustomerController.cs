@@ -26,15 +26,14 @@ namespace Simple.Controller
             _invoiceRepository = new InvoiceRepository();
         }
 
-        [HttpGet("invoices")]
+        [HttpGet()]
         public IActionResult GetCustomers()
         {
-            IQueryable<Customer> customers = _customerRepository.GetAll();
+           IQueryable<Customer> customers = _customerRepository.GetAll();
 
-            var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
+           var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
 
-            List<Invoice> invoices = _invoiceRepository.GetCustomerById(customer.Id);
-
+           List<Invoice> invoices = _invoiceRepository.GetCustomerById(customer.Id);
             var json = JsonConvert.SerializeObject(
                 invoices,
                 Formatting.Indented,

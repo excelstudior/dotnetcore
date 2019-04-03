@@ -22,14 +22,15 @@ namespace Simple.Entity.Base
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connection = Configuration["ConnectionStrings:MsSqlConnection"];
-            //optionsBuilder.UseMySQL(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
-            optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
+            optionsBuilder.UseMySQL(Startup.Configuration["ConnectionStrings:MySqlConnection"]);
+            //optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         }
     }
 }
