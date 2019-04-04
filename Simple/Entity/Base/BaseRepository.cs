@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Entity.Base
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class 
+    public class BaseRepository<T> : IBaseRepository<T> where T : class 
     {
 
         protected BaseDbContext _context;

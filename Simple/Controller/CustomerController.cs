@@ -9,6 +9,7 @@ using Simple.Entity.Base;
 using Simple.Interface;
 using Simple.Repository;
 using Newtonsoft.Json;
+using Simple.Dependency;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,15 +21,16 @@ namespace Simple.Controller
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IInvoiceRepository _invoiceRepository;
-        public CustomerController()
+        public CustomerController(ICustomerRepository customerRepository,IInvoiceRepository invoiceRepository)
         {
-            _customerRepository = new CustomerRepository();
-            _invoiceRepository = new InvoiceRepository();
+            _customerRepository = customerRepository;
+            _invoiceRepository = invoiceRepository;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public IActionResult GetCustomers()
         {
+          
            IQueryable<Customer> customers = _customerRepository.GetAll();
 
            var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
@@ -36,8 +38,10 @@ namespace Simple.Controller
            List<Invoice> invoices = _invoiceRepository.GetCustomerById(customer.Id);
             var json = JsonConvert.SerializeObject(
                 invoices,
-                Formatting.Indented,
-                new JsonSerializerSettings { ReferenceLoopHandling=ReferenceLoopHandling.Ignore});
+                Formatting.Indented
+                //,
+                //new JsonSerializerSettings { ReferenceLoopHandling=ReferenceLoopHandling.Ignore}
+                );
             return Ok(json);
         }
 

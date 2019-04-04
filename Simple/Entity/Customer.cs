@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace Simple.Entity
@@ -14,10 +16,12 @@ namespace Simple.Entity
         //[MaxLength(100)]
         //public string Name { get; set; }
 
-        
+
         public Guid Id { get; set; }
         public string Name { get; set; }
         //map to invoice
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Invoice> Invoices { get; set; }
 
         //Add hirechy later

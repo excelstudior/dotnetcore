@@ -22,8 +22,8 @@ namespace Simple.Entity.Base
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connection = Configuration["ConnectionStrings:MsSqlConnection"];
-            optionsBuilder.UseMySQL(Startup.Configuration["ConnectionStrings:MySqlConnection"]);
-            //optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
+            //optionsBuilder.UseMySQL(Startup.Configuration["ConnectionStrings:MySqlConnection"]);
+            optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:MsSqlConnection"]);
 
         }
 
