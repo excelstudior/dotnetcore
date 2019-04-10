@@ -12,11 +12,15 @@ namespace Simple.Entity.Base
 
         protected BaseDbContext _context;
 
-        public BaseRepository()
-        {
-            _context = DbContextFatory.Create();
-        }
+        //public BaseRepository()
+        //{
+        //    _context = DbContextFatory.Create();
+        //}
 
+        public BaseRepository(BaseDbContext dbContext)
+        {
+            _context = dbContext;
+        }
        //protected static ServiceProvider ServiceProvider { get => serviceProvider; set => serviceProvider = value; }
 
         public virtual IQueryable<T> GetAll()

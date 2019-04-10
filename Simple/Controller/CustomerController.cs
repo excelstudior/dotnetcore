@@ -10,6 +10,7 @@ using Simple.Interface;
 using Simple.Repository;
 using Newtonsoft.Json;
 using Simple.Dependency;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,14 +18,16 @@ namespace Simple.Controller
 {
     [Route("api/customer")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : BaseController
     {
-        private readonly ICustomerRepository _customerRepository;
-        private readonly IInvoiceRepository _invoiceRepository;
-        public CustomerController(ICustomerRepository customerRepository,IInvoiceRepository invoiceRepository)
+        private ICustomerRepository _customerRepository;
+        private IInvoiceRepository _invoiceRepository;
+        private BaseDbContext _baseDbContext;
+        public CustomerController(ICustomerRepository customerRepository,IInvoiceRepository invoiceRepository,BaseDbContext baseDbContext)
         {
             _customerRepository = customerRepository;
             _invoiceRepository = invoiceRepository;
+            _baseDbContext = baseDbContext;
         }
 
         [HttpGet]
@@ -32,9 +35,23 @@ namespace Simple.Controller
         {
           
            IQueryable<Customer> customers = _customerRepository.GetAll();
-
+           
            var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
+           var newCustomer = new Customer
+            {
+                Id = new Guid(),
+                Name = "JJJJJ Import"
+            };
 
+            _customerRepository.Add(newCustomer);
+            var newInvoice = new Invoice
+            {
+                Id = new Guid(),
+                CustomerId = customer.Id
+            };
+            _invoiceRepository.Add(newInvoice);
+
+            _baseDbContext.SaveChanges();
            List<Invoice> invoices = _invoiceRepository.GetCustomerById(customer.Id);
             var json = JsonConvert.SerializeObject(
                 invoices,
@@ -43,6 +60,16 @@ namespace Simple.Controller
                 //new JsonSerializerSettings { ReferenceLoopHandling=ReferenceLoopHandling.Ignore}
                 );
             return Ok(json);
+            
+            
+        }
+
+        [HttpGet("withToken")]
+        [Authorize]
+        public IActionResult GetCustomerWithToken()
+        {
+            var claims = HttpContext.User.Claims;
+            return Ok(claims);
         }
 
 
