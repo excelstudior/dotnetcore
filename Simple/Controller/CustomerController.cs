@@ -36,30 +36,31 @@ namespace Simple.Controller
           
            IQueryable<Customer> customers = _customerRepository.GetAll();
            
-           var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
+           //var customer = customers.Where(c => c.Name == "JJ Import").SingleOrDefault();
            var newCustomer = new Customer
             {
                 Id = new Guid(),
-                Name = "JJJJJ Import"
+                Name = "JJJ Import",
+                Reference = "Test"
             };
 
             _customerRepository.Add(newCustomer);
             var newInvoice = new Invoice
             {
                 Id = new Guid(),
-                CustomerId = customer.Id
+                CustomerId = newCustomer.Id
             };
             _invoiceRepository.Add(newInvoice);
 
             _baseDbContext.SaveChanges();
-           List<Invoice> invoices = _invoiceRepository.GetCustomerById(customer.Id);
-            var json = JsonConvert.SerializeObject(
-                invoices,
-                Formatting.Indented
-                //,
-                //new JsonSerializerSettings { ReferenceLoopHandling=ReferenceLoopHandling.Ignore}
-                );
-            return Ok(json);
+           //List<Invoice> invoices = _invoiceRepository.GetCustomerById(newCustomer.Id);
+           // var json = JsonConvert.SerializeObject(
+           //     invoices,
+           //     Formatting.Indented
+           //     //,
+           //     //new JsonSerializerSettings { ReferenceLoopHandling=ReferenceLoopHandling.Ignore}
+           //     );
+            return Ok();
             
             
         }

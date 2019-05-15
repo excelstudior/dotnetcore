@@ -15,6 +15,8 @@ namespace Simple.Entity.EntityTypeConfiguration
             builder.Property(b => b.Name).IsRequired();
             builder.Property(b => b.Name).HasMaxLength(100);
             builder.HasKey(b => b.Id);
+            builder.HasIndex(b => b.Reference).IsUnique();
+            builder.Property(b => b.Reference).HasMaxLength(6);
         }
     }
 }

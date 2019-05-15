@@ -12,6 +12,7 @@ create table PointOfInterest (
 )
 create table Customer (
 	Id uniqueidentifier primary key,
+	Reference nvarchar(6) Unique,
 	Name nvarchar(100) Unique
 )
 --Invoice with trigger
@@ -61,3 +62,7 @@ BEGIN
     WHERE Id = @Id
 END
 --End
+--If Datebase need to update
+	alter table customer add Reference nvarchar(6)
+	alter table customer add unique(reference)
+--
